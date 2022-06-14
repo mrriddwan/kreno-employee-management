@@ -66,49 +66,71 @@ export default {
 </script> -->
 
 <template>
-        <form @submit.prevent="profileUpload" method="POST" enctype="multipart/form-data">
-            <div class="custom-file">
-                <input type="file" @change="imageSelected" class="custom-file-input" id="customFile">
-                <label class="custom-file-label" for="customFile">Choose an image</label>
-            </div>
-            <div v-if="photoPreview" class="mt-3">
-                <img :src="photoPreview" class="figure-img img-fluid rounded"  style="max-height:100px;">
-            </div>
-            <button class="btn btn-success mt-5" type="submit">Upload profile</button>
-        </form>
+    <form @submit.prevent="profileUpload" enctype="multipart/form-data">
+        <div class="custom-file">
+            <input
+                type="file"
+                @change="imageSelected"
+                class="custom-file-input"
+                id="customFile"
+            />
+            <label class="custom-file-label" for="customFile"
+                >Choose an image</label
+            >
+        </div>
+        <div v-if="photoPreview" class="mt-3">
+            <img
+                :src="photoPreview"
+                class="figure-img img-fluid rounded"
+                style="max-height: 100px"
+            />
+        </div>
+        <button class="btn btn-success mt-5" type="submit">
+            Upload profile
+        </button>
+    </form>
 </template>
+
 <script>
 export default {
-    data(){
-        return{
-            photo: null,
+    data() {
+        return {
+            photo: '',
             photoPreview: null,
-        }
+        };
     },
 
-    methods:{
-        imageSelected(e){
+    methods: {
+        imageSelected(e) {
             this.photo = e.target.files[0];
 
             let reader = new FileReader();
             reader.readAsDataURL(this.photo);
-            reader.onload = e => {
-            this.photoPreview = e.target.result;
-               };
+            reader.onload = (e) => {
+                this.photoPreview = e.target.result;
+            };
         },
 
-        profileUpload(){
-            let data = new FormData;
-            data.append('photo', this.photo);
-            axios
-                // .put('/api/employees/upload-photo/', data)
-                // .then(()=>{
-                //     window.location = '../profile';
-                // }).catch(()=>{            })
-                .put('/api/employees/upload-photo/' + this.$route.params.id, {
-                    photo: this.photo,
-                })
-        }
-    }
-}
+        profileUpload() {
+                const config = {
+                    headers: {
+                        'content-type': 'multipart/form-data'
+                    }
+                }
+                let data = new FormData();
+                data.append('photo', this.photo);
+                axios
+                    .post('/api/employees/upload-photo/' + this.$route.params.id, data, config)
+                    .then((res) => {
+                        this.success = res.data.success;
+                        this.$router.push({  name: 'edit' });
+                    })
+                    .catch((err) => {
+                        this.output = err;
+                        
+                    });
+
+        },
+    },
+};
 </script>

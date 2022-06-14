@@ -24,4 +24,4 @@ Route::post('/employees/store', [EmployeeController::class, 'store'])->name('emp
 Route::get('/employees/show/{employee}', [EmployeeController::class, 'show'])->name('employee:show');
 Route::put('/employees/update/{employee}', [EmployeeController::class, 'update'])->name('employee:update');
 Route::delete('/employees/delete/{employee}', [EmployeeController::class, 'delete'])->name('employee:delete');
-Route::put('/employees/upload-photo/{employee}', [EmployeeController::class, 'uploadPhoto'])->name('employee:uploadPhoto');
+Route::post('/employees/upload-photo/{employee}', [EmployeeController::class, 'uploadPhoto'])->name('employee:uploadPhoto');

@@ -5,6 +5,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Http\Resources\EmployeeResource;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class EmployeeController extends Controller
 {
@@ -60,8 +62,20 @@ class EmployeeController extends Controller
         return response() -> json('Employee deleted.');
     }
 
-    public function uploadPhoto(Request $request)
+    public function uploadPhoto(Request $request, Employee $employee)
     {
+        $this->validate($request,[
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+        ]);
+        $filename = $request -> photo -> getClientOriginalName();
 
+        Storage::disk('public')->put('employee/'.$filename, File::get($request->photo));
+
+        $employee->update(['photo'=>$filename]);
+
+        return response()->json([
+            'message' => 'Successfully upload employee image',
+            'data' => $employee
+        ]);
     }
 }

@@ -24901,7 +24901,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      photo: null,
+      photo: '',
       photoPreview: null
     };
   },
@@ -24918,14 +24918,23 @@ __webpack_require__.r(__webpack_exports__);
       };
     },
     profileUpload: function profileUpload() {
+      var _this2 = this;
+
+      var config = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      };
       var data = new FormData();
       data.append('photo', this.photo);
-      axios // .put('/api/employees/upload-photo/', data)
-      // .then(()=>{
-      //     window.location = '../profile';
-      // }).catch(()=>{            })
-      .put('/api/employees/upload-photo/' + this.$route.params.id, {
-        photo: this.photo
+      axios.post('/api/employees/upload-photo/' + this.$route.params.id, data, config).then(function (res) {
+        _this2.success = res.data.success;
+
+        _this2.$router.push({
+          name: 'edit'
+        });
+      })["catch"](function (err) {
+        _this2.output = err;
       });
     }
   }
@@ -25325,7 +25334,7 @@ var _hoisted_4 = ["src"];
 var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   "class": "btn btn-success mt-5",
   type: "submit"
-}, "Upload profile", -1
+}, " Upload profile ", -1
 /* HOISTED */
 );
 
@@ -25334,7 +25343,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onSubmit: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.profileUpload && $options.profileUpload.apply($options, arguments);
     }, ["prevent"])),
-    method: "POST",
     enctype: "multipart/form-data"
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "file",
