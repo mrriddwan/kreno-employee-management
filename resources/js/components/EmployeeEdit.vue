@@ -3,12 +3,6 @@
         <h3 class="text-center">Edit Employee</h3>
         <div class="row">
             <div class="col-md-6">
-                <img
-                    class="w-20 h-20 rounded-full shadow-lg"
-                    src="https://freesvg.org/img/abstract-user-flat-4.png"
-                    alt="Bonnie image"
-                />
-
                 <!-- , params: { id: employee.id } -->
                 <router-link
                     :to="{ name: 'uploadEmployeeImage' }"
@@ -22,7 +16,20 @@
                     enctype="multipart/form-data"
                 >
                     <div class="space-y-4 rounded-md shadow-sm">
+                        
+                        <img
+                            v-if="form.photo"
+                            class="w-20 h-20 rounded-full shadow-lg"
+                            src="https://freesvg.org/img/abstract-user-flat-4.png"
+                            alt="Bonnie image"
+                        />
 
+                        <img
+                            v-else
+                            class="w-20 h-20 rounded-full shadow-lg"
+                            src="https://freesvg.org/img/abstract-user-flat-4.png"
+                            alt="Bonnie image"
+                        />
 
                         <div>
                             <label
@@ -113,6 +120,7 @@ export default {
                 name: "",
                 address: "",
                 email: "",
+                photo: null,
             },
         };
     },
