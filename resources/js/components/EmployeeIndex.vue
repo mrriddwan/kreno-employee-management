@@ -76,10 +76,20 @@
             </tr>
         </tbody>
     </table>
+
+    <DepartmentList />
+    
 </template>
 
 <script>
+import DepartmentIndex from './department/DepartmentList';
+
 export default {
+
+    components(){
+        DepartmentList
+    },
+
     data() {
         return {
             employees: [],
