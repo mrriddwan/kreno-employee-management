@@ -23,7 +23,10 @@ class DepartmentController extends Controller
 
     public function show(Department $department)
     {
-        return new DepartmentResource($department);
+        return response()->json([
+            'status' => true,
+            'data' => $department,
+        ]);
     }
 
     public function update(DepartmentRequest $request,Department $department)

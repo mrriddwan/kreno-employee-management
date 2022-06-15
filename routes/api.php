@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\DepartmentController;
 use App\Http\Controllers\Api\EmployeeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,4 +27,5 @@ Route::put('/employees/update/{employee}', [EmployeeController::class, 'update']
 Route::delete('/employees/delete/{employee}', [EmployeeController::class, 'delete'])->name('employee:delete');
 Route::post('/employees/upload-photo/{employee}', [EmployeeController::class, 'uploadPhoto'])->name('employee:uploadPhoto');
 
-Route::get('/employees/show/{department}', [EmployeeController::class, 'show'])->name('department:show');
+Route::get('/departments/list', [DepartmentController::class, 'index'])->name('department:index');
+Route::post('/departments/store', [DepartmentController::class, 'store'])->name('department:store');
