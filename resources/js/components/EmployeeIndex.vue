@@ -2,9 +2,8 @@
     <div class="flex flex-row">
         <div class="basis-2/3">
             <div class="p-10">
-                <h2 class="text-left">Employee List</h2>
+                <h2 class="text-center">Employee List</h2>
             </div>
-            
 
             <router-link
                 to="/create"
@@ -58,28 +57,31 @@
                         <td
                             class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap"
                         >
-                            Department
+                            {{ employee.department }}
                         </td>
                         <td
                             class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap"
                         >
                             Roles
                         </td>
-                        <!-- <td>
-                    <div class="btn-group" role="group">
-                        <router-link
-                            :to="{ name: 'edit', params: { id: employee.id } }"
-                            class="mr-2 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150"
-                            >Edit</router-link
-                        >
-                        <button
-                            class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150"
-                            @click="deleteEmployee(employee.id)"
-                        >
-                            Delete
-                        </button>
-                    </div>
-                </td> -->
+                        <td>
+                            <div class="btn-group" role="group">
+                                <router-link
+                                    :to="{
+                                        name: 'edit',
+                                        params: { id: employee.id },
+                                    }"
+                                    class="mr-2 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150"
+                                    >Edit</router-link
+                                >
+                                <button
+                                    class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150"
+                                    @click="deleteEmployee(employee.id)"
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>

@@ -47,6 +47,7 @@ class EmployeeController extends Controller
             'name' => $request->name,
             'address' => $request->address,
             'email' => $request->email,
+            'department' => $request->department,
         ]);
 
         return response()->json([

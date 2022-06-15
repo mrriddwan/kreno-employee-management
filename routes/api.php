@@ -29,3 +29,4 @@ Route::post('/employees/upload-photo/{employee}', [EmployeeController::class, 'u
 
 Route::get('/departments/list', [DepartmentController::class, 'index'])->name('department:index');
 Route::post('/departments/store', [DepartmentController::class, 'store'])->name('department:store');
+Route::get('/departments/show/{department}', [DepartmentController::class, 'show'])->name('department:show');

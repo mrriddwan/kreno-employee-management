@@ -16,7 +16,6 @@
                     enctype="multipart/form-data"
                 >
                     <div class="space-y-4 rounded-md shadow-sm">
-                        
                         <img
                             v-if="form.photo"
                             class="w-20 h-20 rounded-full shadow-lg"
@@ -35,8 +34,9 @@
                             <label
                                 for="name"
                                 class="block text-sm font-medium text-gray-700"
-                                >Name</label
-                            >
+                                >Name
+                            </label>
+                            
                             <div class="mt-1">
                                 <input
                                     type="text"
@@ -52,8 +52,9 @@
                             <label
                                 for="address"
                                 class="block text-sm font-medium text-gray-700"
-                                >Address</label
-                            >
+                                >Address
+                            </label>
+                            
                             <div class="mt-1">
                                 <input
                                     type="text"
@@ -67,10 +68,10 @@
 
                         <div>
                             <label
-                                for="website"
+                                for="email"
                                 class="block text-sm font-medium text-gray-700"
-                                >Email</label
-                            >
+                                >Email
+                            </label>
                             <div class="mt-1">
                                 <input
                                     type="text"
@@ -82,22 +83,24 @@
                             </div>
                         </div>
 
-                        <!-- <div>
-                <label
-                    for="email"
-                    class="block text-sm font-medium text-gray-700"
-                    >Department</label
-                >
-                <div class="mt-1">
-                    <input
-                        type="text"
-                        name="department"
-                        id="department"
-                        class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                        v-model="form.department"
-                    />
-                </div>
-            </div> -->
+                            <label
+                                for="department"
+                                class="block text-sm font-medium text-gray-700"
+                                >Department
+                            </label>
+                        <select
+                            v-model="form.department"
+                            @change="getDepartments"
+                        >
+                            <option value="">Please select one</option>
+                            <option
+                                v-for="department in departments"
+                                :key="department.id"
+                                :value="department.id"
+                            >
+                                {{ department.name }}
+                            </option>
+                        </select>
                     </div>
 
                     <button
@@ -120,12 +123,17 @@ export default {
                 name: "",
                 address: "",
                 email: "",
+                department: "",
                 photo: null,
+
             },
+
+            departments: [],
         };
     },
     created() {
         this.showEmployee();
+        this.getDepartments();
     },
     methods: {
         showEmployee() {
@@ -144,11 +152,25 @@ export default {
                     name: this.form.name,
                     address: this.form.address,
                     email: this.form.email,
+                    department: this.form.department.name,
                 })
                 .then((res) => {
                     this.$router.push({ name: "index" });
                 });
         },
+
+        getDepartments() {
+            axios
+                .get("/api/departments/list")
+                .then((res) => {
+                    this.departments = res.data.data;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+
+        selectDepartment() {},
     },
 };
 </script>

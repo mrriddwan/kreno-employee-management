@@ -22,11 +22,13 @@ class DepartmentController extends Controller
     }
 
     public function show(Department $department)
-    {
+    {   
+        $department = Department::all();
         return response()->json([
             'status' => true,
             'data' => $department,
         ]);
+        // return new DepartmentResource($department);
     }
 
     public function update(DepartmentRequest $request,Department $department)
