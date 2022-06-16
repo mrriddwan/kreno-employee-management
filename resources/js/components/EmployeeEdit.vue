@@ -36,7 +36,7 @@
                                 class="block text-sm font-medium text-gray-700"
                                 >Name
                             </label>
-                            
+
                             <div class="mt-1">
                                 <input
                                     type="text"
@@ -54,7 +54,7 @@
                                 class="block text-sm font-medium text-gray-700"
                                 >Address
                             </label>
-                            
+
                             <div class="mt-1">
                                 <input
                                     type="text"
@@ -83,22 +83,38 @@
                             </div>
                         </div>
 
-                            <label
-                                for="department"
-                                class="block text-sm font-medium text-gray-700"
-                                >Department
-                            </label>
+                        <label
+                            for="department"
+                            class="block text-sm font-medium text-gray-700"
+                            >Department
+                        </label>
                         <select
                             v-model="form.department"
                             @change="getDepartments"
                         >
-                            <option value="">Please select one</option>
+                            <option disabled value="">Please select one</option>
                             <option
                                 v-for="department in departments"
                                 :key="department.id"
-                                :value="department.id"
+                                :value="department.name"
                             >
                                 {{ department.name }}
+                            </option>
+                        </select>
+
+                        <label
+                            for="roles"
+                            class="block text-sm font-medium text-gray-700"
+                            >Roles
+                        </label>
+                        <select v-model="form.roles" @change="getRoles">
+                            <option disabled value="">Please select one</option>
+                            <option
+                                v-for="role in roles"
+                                :key="role.id"
+                                :value="role.name"
+                            >
+                                {{ role.name }}
                             </option>
                         </select>
                     </div>
@@ -125,7 +141,6 @@ export default {
                 email: "",
                 department: "",
                 photo: null,
-
             },
 
             departments: [],
@@ -134,6 +149,7 @@ export default {
     created() {
         this.showEmployee();
         this.getDepartments();
+        this.getRoles();
     },
     methods: {
         showEmployee() {
@@ -152,7 +168,7 @@ export default {
                     name: this.form.name,
                     address: this.form.address,
                     email: this.form.email,
-                    department: this.form.department.name,
+                    department: this.form.department,
                 })
                 .then((res) => {
                     this.$router.push({ name: "index" });
@@ -170,8 +186,9 @@ export default {
                 });
         },
 
-        selectDepartment() {},
+        getRoles(){
+            
+        }
     },
 };
 </script>
-<!-- /employees/update/{employee} -->

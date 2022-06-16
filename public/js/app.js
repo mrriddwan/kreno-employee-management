@@ -24836,7 +24836,7 @@ __webpack_require__.r(__webpack_exports__);
         name: this.form.name,
         address: this.form.address,
         email: this.form.email,
-        department: this.form.department.name
+        department: this.form.department
       }).then(function (res) {
         _this2.$router.push({
           name: "index"
@@ -25290,7 +25290,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, [_hoisted_15, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.departments, function (department) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       key: department.id,
-      value: department.id
+      value: department.name
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(department.name), 9
     /* TEXT, PROPS */
     , _hoisted_16);
