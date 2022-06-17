@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\DepartmentController;
 use App\Http\Controllers\Api\EmployeeController;
+use App\Http\Controllers\Api\RoleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,3 +31,8 @@ Route::post('/employees/upload-photo/{employee}', [EmployeeController::class, 'u
 Route::get('/departments/list', [DepartmentController::class, 'index'])->name('department:index');
 Route::post('/departments/store', [DepartmentController::class, 'store'])->name('department:store');
 Route::get('/departments/show/{department}', [DepartmentController::class, 'show'])->name('department:show');
+Route::delete('/departments/delete/{department}', [DepartmentController::class, 'delete'])->name('department:delete');
+
+
+Route::get('/roles/list', [RoleController::class, 'index'])->name('role:index');
+Route::post('/roles/store', [RoleController::class, 'store'])->name('role:store');

@@ -17,4 +17,14 @@ class Employee extends Model
         'photo',
         'department'
     ];
+
+    public function department()
+    {
+        return $this->hasOne(Department::class);
+    }
+
+    public function roles()
+    {
+        return $this->hasManyThrough(Role::class, Department::class, 'department_id', '');
+    }
 }

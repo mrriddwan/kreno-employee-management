@@ -1,9 +1,11 @@
 import EmployeeIndex from './components/EmployeeIndex.vue';
 import EmployeeCreate from './components/EmployeeCreate.vue';
 import EmployeeEdit from './components/EmployeeEdit.vue';
-import EmployeeUploadImage from './components/EmployeeUploadImage.vue'
-import DepartmentList from './components/department/DepartmentList.vue'
-import DepartmentCreate from './components/department/DepartmentCreate.vue'
+import EmployeeUploadImage from './components/EmployeeUploadImage.vue';
+import DepartmentList from './components/department/DepartmentList.vue';
+import DepartmentCreate from './components/department/DepartmentCreate.vue';
+import RoleCreate from './components/department/RoleCreate.vue';
+import DepartmentEdit from './components/department/DepartmentEdit.vue';
 
 import { createRouter, createWebHistory } from 'vue-router';
  
@@ -37,6 +39,16 @@ const routes = [
         name: 'DepartmentCreate',
         path: '/department-create',
         component: DepartmentCreate
+    },
+    {
+        name: 'RoleCreate',
+        path: '/role-create',
+        component: RoleCreate
+    },
+    {
+        name: 'department-edit',
+        path: '/edit/department/:id',
+        component: DepartmentEdit
     },
 
 

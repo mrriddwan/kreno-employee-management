@@ -15,8 +15,13 @@ class Department extends Model
         'description'
     ];
 
+    public function employees()
+    {
+        return $this->hasMany(Employee::class);
+    }
+
     public function roles()
     {
-        return $this->hasMany(Role::class);
+        return $this->hasMany(Employee::class);
     }
 }
