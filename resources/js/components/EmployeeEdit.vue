@@ -3,12 +3,25 @@
         <h3 class="text-center">Edit Employee</h3>
         <div class="row">
             <div class="col-md-6">
-                <!-- , params: { id: employee.id } -->
                 <router-link
-                    :to="{ name: 'uploadEmployeeImage' }"
+                    :to="{ name: 'EmployeeUploadImage' }"
                     class="inline-flex items-center px-2 py-2 mt-4 mb-4 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150"
                     >Edit</router-link
                 >
+                <!-- <img
+                    v-if="employee_photo"
+                    class="w-20 h-20 rounded-full shadow-lg"
+                    @change="imageSelected"
+                    :src="employee_photo"
+                    alt="Bonnie image"
+                />
+
+                <img
+                    v-else
+                    class="w-20 h-20 rounded-full shadow-lg"
+                    src="https://freesvg.org/img/abstract-user-flat-4.png"
+                    alt="Bonnie image"
+                /> -->
 
                 <form
                     class="space-y-6"
@@ -17,9 +30,9 @@
                 >
                     <div class="space-y-4 rounded-md shadow-sm">
                         <img
-                            v-if="form.photo"
+                            v-if="form.employee_photo"
                             class="w-20 h-20 rounded-full shadow-lg"
-                            src="https://freesvg.org/img/abstract-user-flat-4.png"
+                            :src="require('/laragon/www/kreno-employee-management/storage/app/public/employee/'+ this.form.employee_photo)"
                             alt="Bonnie image"
                         />
 
@@ -89,14 +102,14 @@
                             >Department
                         </label>
                         <select
-                            v-model="form.department"
+                            v-model="form.department_id"
                             @change="getDepartments"
                         >
                             <option disabled value="">Please select one</option>
                             <option
                                 v-for="department in departments"
                                 :key="department.id"
-                                :value="department.name"
+                                :value="department.id"
                             >
                                 {{ department.name }}
                             </option>
@@ -107,12 +120,15 @@
                             class="block text-sm font-medium text-gray-700"
                             >Roles
                         </label>
-                        <select v-model="form.roles" @change="getRoles">
+                        <select
+                            v-model="form.department_role_id"
+                            @change="getRoles"
+                        >
                             <option disabled value="">Please select one</option>
                             <option
                                 v-for="role in roles"
                                 :key="role.id"
-                                :value="role.name"
+                                :value="role.id"
                             >
                                 {{ role.name }}
                             </option>
@@ -139,10 +155,13 @@ export default {
                 name: "",
                 address: "",
                 email: "",
-                department: "",
-                photo: null,
+                department_id: "",
+                department_role_id: "",
+                employee_photo: "",
+                photoPreview: null,
             },
 
+            roles: [],
             departments: [],
         };
     },
@@ -150,8 +169,33 @@ export default {
         this.showEmployee();
         this.getDepartments();
         this.getRoles();
+        this.getEmployeePhoto();
     },
     methods: {
+        imageSelected(e) {
+            this.form.employee_photo = e.target.files[0];
+
+            let reader = new FileReader();
+            reader.readAsDataURL(this.form.employee_photo);
+            reader.onload = (e) => {
+                this.form.photoPreview = e.target.result;
+            };
+        },
+
+        getEmployeePhoto(){
+
+            return "employee/" + this.form.employee_photo;
+        },
+        // imageSelected(e) {
+        //     this.photo = e.target.files[0];
+
+        //     let reader = new FileReader();
+        //     reader.readAsDataURL(this.photo);
+        //     reader.onload = (e) => {
+        //         this.photoPreview = e.target.result;
+        //     };
+        // },
+
         showEmployee() {
             axios
                 .get("/api/employees/show/" + this.$route.params.id)
@@ -168,7 +212,9 @@ export default {
                     name: this.form.name,
                     address: this.form.address,
                     email: this.form.email,
-                    department: this.form.department,
+                    employee_photo: this.form.employee_photo,
+                    department_id: this.form.department_id,
+                    department_role_id: this.form.department_role_id,
                 })
                 .then((res) => {
                     this.$router.push({ name: "index" });
@@ -186,9 +232,16 @@ export default {
                 });
         },
 
-        getRoles(){
-            
-        }
+        getRoles() {
+            axios
+                .get("/api/roles/list")
+                .then((res) => {
+                    this.roles = res.data.data;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
     },
 };
 </script>

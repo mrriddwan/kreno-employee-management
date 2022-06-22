@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Api\DepartmentController;
 use App\Http\Controllers\Api\EmployeeController;
-use App\Http\Controllers\Api\RoleController;
+use App\Http\Controllers\Api\DepartmentRolesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +25,7 @@ Route::get('/employees/index', [EmployeeController::class, 'index'])->name('empl
 Route::post('/employees/store', [EmployeeController::class, 'store'])->name('employee:store');
 Route::get('/employees/show/{employee}', [EmployeeController::class, 'show'])->name('employee:show');
 Route::put('/employees/update/{employee}', [EmployeeController::class, 'update'])->name('employee:update');
+Route::post('/api/employees/assignDept/{employee}', [EmployeeController::class, 'assignDept'])->name('employee:assignDept');
 Route::delete('/employees/delete/{employee}', [EmployeeController::class, 'delete'])->name('employee:delete');
 Route::post('/employees/upload-photo/{employee}', [EmployeeController::class, 'uploadPhoto'])->name('employee:uploadPhoto');
 
@@ -32,7 +33,8 @@ Route::get('/departments/list', [DepartmentController::class, 'index'])->name('d
 Route::post('/departments/store', [DepartmentController::class, 'store'])->name('department:store');
 Route::get('/departments/show/{department}', [DepartmentController::class, 'show'])->name('department:show');
 Route::delete('/departments/delete/{department}', [DepartmentController::class, 'delete'])->name('department:delete');
+Route::post('/departments/upload-photo/{department}', [DepartmentController::class, 'uploadPhoto'])->name('department:uploadPhoto');
 
 
-Route::get('/roles/list', [RoleController::class, 'index'])->name('role:index');
-Route::post('/roles/store', [RoleController::class, 'store'])->name('role:store');
+Route::get('/roles/list', [DepartmentRolesController::class, 'list']);
+Route::post('/roles/store', [DepartmentRolesController::class, 'store']);

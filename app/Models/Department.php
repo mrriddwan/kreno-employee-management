@@ -12,7 +12,9 @@ class Department extends Model
     protected $fillable = 
     [
         'name',
-        'description'
+        'description',
+        'dept_photo',
+        'dept_photo_path'
     ];
 
     public function employees()
@@ -22,6 +24,6 @@ class Department extends Model
 
     public function roles()
     {
-        return $this->hasMany(Employee::class);
+        return $this->hasMany(Department_Roles::class);
     }
 }

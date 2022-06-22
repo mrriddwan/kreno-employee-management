@@ -1,5 +1,4 @@
 <template>
-    <h3 class="text-center">Edit Employee</h3>
     <form @submit.prevent="profileUpload" enctype="multipart/form-data">
         <div class="custom-file">
             <input
@@ -8,7 +7,9 @@
                 class="custom-file-input"
                 id="customFile"
             />
-
+            <label class="custom-file-label" for="customFile"
+                >Choose an image</label
+            >
         </div>
         <div v-if="photoPreview" class="mt-3">
             <img
@@ -50,12 +51,12 @@ export default {
                     }
                 }
                 let data = new FormData();
-                data.append('employee_photo', this.photo);
+                data.append('dept_photo', this.photo);
                 axios
-                    .post('/api/employees/upload-photo/' + this.$route.params.id, data, config)
+                    .post('/api/departments/upload-photo/' + this.$route.params.id, data, config)
                     .then((res) => {
                         this.success = res.data.success;
-                        this.$router.push({  name: 'edit' });
+                        this.$router.push({  name: 'department-edit' });
                     })
                     .catch((err) => {
                         this.output = err;

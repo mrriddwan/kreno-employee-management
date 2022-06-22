@@ -15,7 +15,7 @@
                         <option
                             v-for="department in departments"
                             :key="department.id"
-                            :value="department.name"
+                            :value="department.id"
                         >
                             {{ department.name }}
                         </option>
@@ -55,6 +55,7 @@ export default {
     data() {
         return {
             form: {
+                department_id: "",
                 role: "",
                 description: "",
             },
@@ -70,6 +71,7 @@ export default {
         createRole() {
             axios
                 .post("/api/roles/store", {
+                    department_id: this.form.department,
                     role: this.form.role,
                     description: this.form.description,
                 })

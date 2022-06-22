@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('roles', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('department__roles', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('department_id');
-            $table->string('role');
+            $table->string('name');
             $table->string('description')->nullable();
             $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
             $table->timestamps();
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('department__roles');
     }
 };

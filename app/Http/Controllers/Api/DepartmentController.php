@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Department;
 use App\Http\Resources\DepartmentResource;
 use App\Http\Requests\DepartmentRequest;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class DepartmentController extends Controller
 {
@@ -23,7 +25,7 @@ class DepartmentController extends Controller
 
     public function show(Department $department)
     {   
-        $department = Department::all();
+        // $department = Department::all();
         return response()->json([
             'status' => true,
             'data' => $department,
@@ -37,9 +39,26 @@ class DepartmentController extends Controller
         return new DepartmentResource($department);
     }
 
-    public function uploadImage()
+    public function uploadPhoto(Request $request, Department $department)
     {
+        $this->validate($request,[
+            'dept_photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+        ]);
 
+
+        $filename = time() .'_'. $request -> dept_photo -> getClientOriginalName();
+        $file_path = $request -> file('dept_photo') -> storeAs('uploads', $filename, 'public');
+    
+
+        $department->update([
+            'dept_photo' => $filename,
+            'dept_photo_path' => '/storage/' . $file_path
+        ]);
+
+        return response()->json([
+            'message' => 'Successfully upload department image',
+            'data' => $department
+        ]);
     }
 
     public function delete(Department $department)

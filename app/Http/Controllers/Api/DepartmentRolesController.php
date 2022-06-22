@@ -4,19 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Role;
+use App\Models\Department_Roles;
 
-class RoleController extends Controller
+class DepartmentRolesController extends Controller
 {
-    public function department()
-    {
-        ;
-    }
-
-
     public function index() 
     {
-        $roles = Role::all();
+        $roles = Department_Roles::all();
 
         return response()->json([
             'status'=> true,
@@ -26,9 +20,10 @@ class RoleController extends Controller
 
     public function store(Request $request) 
     {
-        $roles = Role::create([
-            'name'=>$request->name,
-            'description'=>$request->address,
+        $roles = Department_Roles::create([
+            'department_id'=>$request->department_id,
+            'name'=>$request->role,
+            'description'=>$request->description,
         ]);
 
         return response()->json([
@@ -38,7 +33,7 @@ class RoleController extends Controller
         ]);
     }
 
-    public function delete(Role $roles)
+    public function delete(Department_Roles $roles)
     {
         $roles->delete();
         return response()->json([
@@ -46,4 +41,12 @@ class RoleController extends Controller
         ]);
     }
 
+    public function list(Department_Roles $roles)
+    {
+        $roles = Department_Roles::all();
+
+        return response()->json([
+            'data' => $roles
+        ]);
+    }
 }

@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class Department_Roles extends Model
 {
     use HasFactory;
 
     protected $fillable = 
     [
-        'role',
+        'department_id',
+        'name',
         'description'
     ];
 
@@ -24,4 +25,5 @@ class Role extends Model
     {
         return $this->belongsToMany(Employee::class);
     }
+
 }
