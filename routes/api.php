@@ -29,12 +29,16 @@ Route::post('/api/employees/assignDept/{employee}', [EmployeeController::class, 
 Route::delete('/employees/delete/{employee}', [EmployeeController::class, 'delete'])->name('employee:delete');
 Route::post('/employees/upload-photo/{employee}', [EmployeeController::class, 'uploadPhoto'])->name('employee:uploadPhoto');
 
-Route::get('/departments/list', [DepartmentController::class, 'index'])->name('department:index');
+Route::get('/departments/index', [DepartmentController::class, 'index'])->name('department:index');
+Route::get('/departments/list', [DepartmentController::class, 'list'])->name('department:index');
 Route::post('/departments/store', [DepartmentController::class, 'store'])->name('department:store');
 Route::get('/departments/show/{department}', [DepartmentController::class, 'show'])->name('department:show');
 Route::delete('/departments/delete/{department}', [DepartmentController::class, 'delete'])->name('department:delete');
 Route::post('/departments/upload-photo/{department}', [DepartmentController::class, 'uploadPhoto'])->name('department:uploadPhoto');
 
-
+Route::get('/roles/index', [DepartmentRolesController::class, 'index']);
 Route::get('/roles/list', [DepartmentRolesController::class, 'list']);
 Route::post('/roles/store', [DepartmentRolesController::class, 'store']);
+Route::get('/roles/show/{role}', [DepartmentRolesController::class, 'show'])->name('role:show');
+Route::delete('/roles/delete/{role}', [DepartmentRolesController::class, 'delete']);
+

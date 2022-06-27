@@ -18,12 +18,19 @@ use Illuminate\Support\Facades\Route;
 // });
 require __DIR__.'/auth.php';
 
+Route::view('/{any}', 'dashboard')
+    ->middleware(['auth'])
+    ->name('dashboard')
+    ->where('any', '.*');
+
+// Route::get('{any}', function () {
+//         return view('dashboard');
+//     })->where('any', '.*')->middleware(['auth'])->name('dashboard');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::view('/{any}', 'dashboard')
-    ->middleware(['auth'])
-    ->where('any', '.*');
+
 
 

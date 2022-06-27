@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-row">
-        <div class="basis-2/3">
+        <div class="basis-1/2">
             <div class="p-10">
                 <h2 class="text-center">Employee List</h2>
             </div>
@@ -42,6 +42,7 @@
                 </thead>
 
                 <tbody>
+
                     <tr v-for="employee in employees" :key="employee.id">
                         <td
                             class="px-3 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap"
@@ -54,16 +55,31 @@
                             {{ employee.name }}
                         </td>
 
-                        <td
+                        <td v-if="employee.department_id === null"
                             class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap"
                         >
-                            {{ employee.department }}
+                        No department
                         </td>
-                        <td
+                        <td v-else
                             class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap"
                         >
-                            {{ employee.role }}
+                        {{ employee.department.name }}
                         </td>
+
+                        <td v-if="employee.department_role_id === null"
+                            class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap"
+                        >
+                        No roles
+                        </td>
+                        <td v-else
+                            class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap"
+                        >
+                        {{ employee.roles.name }}
+                        </td>
+                        
+
+                    
+
                         <td>
                             <div class="btn-group" role="group">
                                 <router-link
@@ -87,23 +103,32 @@
             </table>
         </div>
 
-        <div class="basis-1/3">
+        <div class="basis-1/2">
             <DepartmentList />
+            <RoleIndex />
         </div>
+
+        <!-- <div class="basis-1/2">
+            <RoleIndex />
+        </div> -->
     </div>
 </template>
 
 <script>
-import DepartmentList from "./department/DepartmentList";
+import DepartmentList from '../department/DepartmentList.vue';
+import RoleIndex from '../department/role/RoleIndex.vue';
 
 export default {
     components: {
         DepartmentList,
+        RoleIndex
     },
 
     data() {
         return {
             employees: [],
+            departments: [],
+
         };
     },
 

@@ -25,12 +25,11 @@ class DepartmentController extends Controller
 
     public function show(Department $department)
     {   
-        // $department = Department::all();
         return response()->json([
             'status' => true,
             'data' => $department,
         ]);
-        // return new DepartmentResource($department);
+
     }
 
     public function update(DepartmentRequest $request,Department $department)
@@ -46,9 +45,12 @@ class DepartmentController extends Controller
         ]);
 
 
-        $filename = time() .'_'. $request -> dept_photo -> getClientOriginalName();
-        $file_path = $request -> file('dept_photo') -> storeAs('uploads', $filename, 'public');
-    
+        // $filename = time() .'_'. $request -> dept_photo -> getClientOriginalName();
+        // $file_path = $request -> file('dept_photo') -> storeAs('department', $filename, 'public');
+
+        $filename = $request -> dept_photo -> getClientOriginalName();
+        Storage::disk('public')->put('department/'.$filename, File::get($request->dept_photo));
+        $file_path = 2;
 
         $department->update([
             'dept_photo' => $filename,

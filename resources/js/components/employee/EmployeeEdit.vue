@@ -8,20 +8,6 @@
                     class="inline-flex items-center px-2 py-2 mt-4 mb-4 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150"
                     >Edit</router-link
                 >
-                <!-- <img
-                    v-if="employee_photo"
-                    class="w-20 h-20 rounded-full shadow-lg"
-                    @change="imageSelected"
-                    :src="employee_photo"
-                    alt="Bonnie image"
-                />
-
-                <img
-                    v-else
-                    class="w-20 h-20 rounded-full shadow-lg"
-                    src="https://freesvg.org/img/abstract-user-flat-4.png"
-                    alt="Bonnie image"
-                /> -->
 
                 <form
                     class="space-y-6"
@@ -32,7 +18,7 @@
                         <img
                             v-if="form.employee_photo"
                             class="w-20 h-20 rounded-full shadow-lg"
-                            :src="require('/laragon/www/kreno-employee-management/storage/app/public/employee/'+ this.form.employee_photo)"
+                            :src="`/storage/employee/` + this.form.employee_photo"
                             alt="Bonnie image"
                         />
 
@@ -148,6 +134,9 @@
 </template>
 
 <script>
+
+
+
 export default {
     data() {
         return {
@@ -158,9 +147,7 @@ export default {
                 department_id: "",
                 department_role_id: "",
                 employee_photo: "",
-                photoPreview: null,
             },
-
             roles: [],
             departments: [],
         };
@@ -169,33 +156,8 @@ export default {
         this.showEmployee();
         this.getDepartments();
         this.getRoles();
-        this.getEmployeePhoto();
     },
     methods: {
-        imageSelected(e) {
-            this.form.employee_photo = e.target.files[0];
-
-            let reader = new FileReader();
-            reader.readAsDataURL(this.form.employee_photo);
-            reader.onload = (e) => {
-                this.form.photoPreview = e.target.result;
-            };
-        },
-
-        getEmployeePhoto(){
-
-            return "employee/" + this.form.employee_photo;
-        },
-        // imageSelected(e) {
-        //     this.photo = e.target.files[0];
-
-        //     let reader = new FileReader();
-        //     reader.readAsDataURL(this.photo);
-        //     reader.onload = (e) => {
-        //         this.photoPreview = e.target.result;
-        //     };
-        // },
-
         showEmployee() {
             axios
                 .get("/api/employees/show/" + this.$route.params.id)
@@ -223,7 +185,7 @@ export default {
 
         getDepartments() {
             axios
-                .get("/api/departments/list")
+                .get("/api/departments/index")
                 .then((res) => {
                     this.departments = res.data.data;
                 })
@@ -234,7 +196,7 @@ export default {
 
         getRoles() {
             axios
-                .get("/api/roles/list")
+                .get("/api/roles/index")
                 .then((res) => {
                     this.roles = res.data.data;
                 })

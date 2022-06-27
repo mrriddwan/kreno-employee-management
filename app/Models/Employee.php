@@ -24,16 +24,12 @@ class Employee extends Model
 
     public function department()
     {
-        return $this->belongsToMany(Department::class);
+        return $this->belongsTo(Department::class, 'department_id');
     }
 
     public function roles()
     {
-        return $this->hasMany(Department_Roles::class);
+        return $this->belongsTo(Department_Roles::class, 'department_role_id');
     }
 
-    public function getThumbAttribute($value)
-    {
-        return asset('storage/employee/' . $value);
-    }
 }

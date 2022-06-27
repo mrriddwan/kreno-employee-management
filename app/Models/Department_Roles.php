@@ -18,12 +18,12 @@ class Department_Roles extends Model
 
     public function departments()
     {
-        return $this->belongsToMany(Department::class);
+        return $this->belongsTo(Department::class, 'department_id');
     }
 
     public function employees()
     {
-        return $this->belongsToMany(Employee::class);
+        return $this->belongsTo(Employee::class);
     }
 
 }

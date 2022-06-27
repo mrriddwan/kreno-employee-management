@@ -10,7 +10,7 @@ class DepartmentRolesController extends Controller
 {
     public function index() 
     {
-        $roles = Department_Roles::all();
+        $roles = Department_Roles::with('departments')->get();
 
         return response()->json([
             'status'=> true,
@@ -41,12 +41,12 @@ class DepartmentRolesController extends Controller
         ]);
     }
 
-    public function list(Department_Roles $roles)
+    public function show(Department_Roles $role)
     {
-        $roles = Department_Roles::all();
-
         return response()->json([
-            'data' => $roles
+            'data' => $role
         ]);
     }
+
+    
 }

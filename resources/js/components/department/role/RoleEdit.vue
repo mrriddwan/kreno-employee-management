@@ -1,34 +1,15 @@
 <template>
     <div>
-        <h3 class="text-center">Edit Department</h3>
+        <h3 class="text-center">Edit Role</h3>
         <div class="row">
             <div class="col-md-6">
-                <router-link
-                    :to="{ name: 'DepartmentUploadImage' }"
-                    class="inline-flex items-center px-2 py-2 mt-4 mb-4 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150"
-                    >Edit</router-link
-                >
+
 
                 <form
                     class="space-y-6"
-                    v-on:submit.prevent="updateDepartment"
-                    enctype="multipart/form-data"
+                    v-on:submit.prevent="updateRoles"
                 >
                     <div class="space-y-4 rounded-md shadow-sm">
-                        <!-- :src="`../storage/employee/` + this.form.employee_photo" -->
-                        <img
-                            v-if="form.dept_photo"
-                            class="w-20 h-20 rounded-full shadow-lg"
-                            :src="`/storage/department/`+ this.form.dept_photo"
-                            alt="Department Photo"
-                        />
-
-                        <img
-                            v-else
-                            class="w-20 h-20 rounded-full shadow-lg"
-                            src="https://freesvg.org/img/abstract-user-flat-4.png"
-                            alt="Bonnie image"
-                        />
 
                         <div>
                             <label
@@ -86,17 +67,16 @@ export default {
             form: {
                 name: "",
                 description: "",
-                dept_photo: ""
             },
         };
     },
     created() {
-        this.showDepartment();
+        this.showRoles();
     },
     methods: {
-        showDepartment() {
+        showRoles() {
             axios
-                .get("/api/departments/show/" + this.$route.params.id)
+                .get("/api/roles/show/" + this.$route.params.id)
                 .then((res) => {
                     this.form = res.data.data;
                 })
@@ -104,9 +84,9 @@ export default {
                     console.log(error);
                 });
         },
-        updateDepartment() {
+        updateRoles() {
             axios
-                .put("/api/departments/update/" + this.$route.params.id, {
+                .put("/api/roles/update/" + this.$route.params.id, {
                     name: this.form.name,
                     description: this.form.description,
                 })
@@ -114,6 +94,7 @@ export default {
                     this.$router.push({ name: "index" });
                 });
         },
+
 
     },
 };

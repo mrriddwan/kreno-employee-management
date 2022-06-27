@@ -3,20 +3,30 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DepartmentRequest;
+use App\Http\Resources\DepartmentResource;
 use App\Models\Employee;
+use App\Models\Department;
+use App\Models\Department_Roles;
 use Illuminate\Http\Request;
 use App\Http\Resources\EmployeeResource;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image as Image;
+use Illuminate\Support\Facades\DB;
 
 
 class EmployeeController extends Controller
 {
     public function index()
     {
-        return EmployeeResource::collection(Employee::all());
+        $employees = Employee::with('department', 'roles')->get();
+
+
+        return response()->json(['data'=> $employees]);
+
     }
+
 
     public function store(Request $request)
     {
@@ -87,26 +97,8 @@ class EmployeeController extends Controller
         ]);
 
         
-        // $employee_photo = $employee->photo;
-
-        // $filename = time() . '.' . explode('/', explode(':', substr($request->employee_photo, 0, strpos($request->employee_photo, ';')))[1])[1];
-        // Image::make($request->employee_photo)->save(public_path('avatar/employee/') . $filename);
-        // $request->merge(['employee_photo' => $filename]);
-                // $userPhoto = public_path('avatar/employee/') . $employee_photo;
-        // if (file_exists($userPhoto)) {
-        //     @unlink($userPhoto);
-        // }
-
-
         $filename = $request -> employee_photo -> getClientOriginalName();
         Storage::disk('public')->put('employee/'.$filename, File::get($request->employee_photo));
-        
-        // $filename = str_replace('data:image/jpeg;base64,', '', $request->employee_photo);
-        // $filepath->path = '/storage/app/public/' . $request->path;
-
-        // Storage::disk('public')->put($request->path, base64_decode($filename));    
-
-
 
         $employee->update([
             'employee_photo' => $filename

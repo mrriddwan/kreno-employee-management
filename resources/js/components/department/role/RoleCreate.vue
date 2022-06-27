@@ -82,7 +82,7 @@ export default {
 
         getDepartments() {
             axios
-                .get("/api/departments/list")
+                .get("/api/departments/index")
                 .then((res) => {
                     this.departments = res.data.data;
                 })
