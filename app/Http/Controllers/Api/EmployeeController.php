@@ -12,19 +12,16 @@ use Illuminate\Http\Request;
 use App\Http\Resources\EmployeeResource;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image as Image;
-use Illuminate\Support\Facades\DB;
 
 
 class EmployeeController extends Controller
-{
+{    
     public function index()
     {
         $employees = Employee::with('department', 'roles')->get();
 
 
-        return response()->json(['data'=> $employees]);
-
+        return response()->json(['data' => $employees]);
     }
 
 
@@ -55,6 +52,7 @@ class EmployeeController extends Controller
 
     public function update(Request $request, Employee $employee)
     {
+
         $employee->update([
             'name' => $request->name,
             'address' => $request->address,
@@ -62,6 +60,7 @@ class EmployeeController extends Controller
             'department_id' => $request->department_id,
             'department_role_id' => $request->department_role_id,
         ]);
+
 
         return response()->json([
             'status' => true,
@@ -96,9 +95,9 @@ class EmployeeController extends Controller
             'employee_photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
 
-        
-        $filename = $request -> employee_photo -> getClientOriginalName();
-        Storage::disk('public')->put('employee/'.$filename, File::get($request->employee_photo));
+
+        $filename = $request->employee_photo->getClientOriginalName();
+        Storage::disk('public')->put('employee/' . $filename, File::get($request->employee_photo));
 
         $employee->update([
             'employee_photo' => $filename

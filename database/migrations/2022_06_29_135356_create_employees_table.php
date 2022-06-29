@@ -23,8 +23,9 @@ return new class extends Migration
             $table->unsignedBigInteger('department_id')->nullable()->constrained();
             $table->unsignedBigInteger('department_role_id')->nullable()->constrained();
             $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
-            $table->foreign('department_role_id')->references('id')->on('department__roles')->onDelete('cascade');
+            $table->foreign('department_role_id')->references('id')->on('department_roles')->onDelete('cascade');
             $table->timestamps();
+
         });
     }
 

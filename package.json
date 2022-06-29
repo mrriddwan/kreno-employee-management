@@ -22,10 +22,14 @@
         "url-loader": "^4.1.1"
     },
     "dependencies": {
+        "@vueform/multiselect": "^2.4.2",
         "vue": "^3.2.36",
         "vue-axios": "^3.4.1",
         "vue-loader": "^17.0.0",
+        "vue-multiselect": "^3.0.0-alpha.2",
+        "vue-next-select": "^2.10.4",
         "vue-router": "^4.0.13",
+        "vue-select-3": "^1.0.1",
         "vue-template-compiler": "^2.6.14"
     }
 }

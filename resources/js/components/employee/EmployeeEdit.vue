@@ -18,7 +18,9 @@
                         <img
                             v-if="form.employee_photo"
                             class="w-20 h-20 rounded-full shadow-lg"
-                            :src="`/storage/employee/` + this.form.employee_photo"
+                            :src="
+                                `/storage/employee/` + this.form.employee_photo
+                            "
                             alt="Bonnie image"
                         />
 
@@ -106,9 +108,10 @@
                             class="block text-sm font-medium text-gray-700"
                             >Roles
                         </label>
-                        <select
+                        <!-- <vue-select
                             v-model="form.department_role_id"
                             @change="getRoles"
+                            multiple
                         >
                             <option disabled value="">Please select one</option>
                             <option
@@ -118,7 +121,56 @@
                             >
                                 {{ role.name }}
                             </option>
+                        </vue-select> -->
+                        <!-- <multiselect
+                            v-model="form.department_role_id"
+                            :options="roles"
+                            placeholder="Select one/multiple"
+                            :multiple="true"
+                            :close-on-select="false"
+                            :clear-on-select="false"
+                        >
+                        </multiselect> -->
+                        <!-- <div>
+                            <multiselect
+                                v-model="form.department_role_id"
+                                :value="form.department_role_id"
+                                :options="roles"
+                                :multiple="true"
+                                :close-on-select="false"
+                                :clear-on-select="false"
+                                :preserve-search="true"
+                                placeholder="Select one/multiple"
+                                label="name"
+                                track-by="name"
+                                :preselect-first="true"
+                            >
+                                <template
+                                    slot="selection"
+                                    slot-scope="{ values, search, isOpen }"
+                                >
+                                    <span
+                                        class="multiselect__single m-10"
+                                        v-if="values.length &amp;&amp; !isOpen"
+                                        >{{ values.length }} options selected
+                                    </span>
+                                </template>
+                            </multiselect>
+                            <pre
+                                class="language-json m-10"
+                            ><code>{{ value }}</code></pre>
+                        </div> -->
+                        <select v-model="form.department_role_id" multiple @change="debug(this.value)">
+                            <option
+                                v-for="role in roles"
+                                :value="role.id"
+                                :key="role.id"                                
+                            >
+                                {{ role.name }}
+                            </option>
                         </select>
+
+                        <div>Selected: {{ form.department_role_id }}</div>
                     </div>
 
                     <button
@@ -134,10 +186,17 @@
 </template>
 
 <script>
-
-
+import Multiselect from "vue-multiselect";
 
 export default {
+    components: {
+        Multiselect,
+    },
+
+    computed: {
+        options: () => roles,
+    },
+
     data() {
         return {
             form: {
@@ -145,11 +204,12 @@ export default {
                 address: "",
                 email: "",
                 department_id: "",
-                department_role_id: "",
+                department_role_id: [],
                 employee_photo: "",
             },
-            roles: [],
+            selected: "",
             departments: [],
+            roles: [],
         };
     },
     created() {
@@ -158,6 +218,10 @@ export default {
         this.getRoles();
     },
     methods: {
+        debug(value){
+            console.log(value)
+        },
+        
         showEmployee() {
             axios
                 .get("/api/employees/show/" + this.$route.params.id)

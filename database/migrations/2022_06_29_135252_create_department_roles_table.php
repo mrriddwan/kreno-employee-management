@@ -13,12 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('department__roles', function (Blueprint $table) {
+        Schema::create('department_roles', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('department_id');
             $table->string('name');
             $table->string('description')->nullable();
-            $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
+            $table->foreignId('department_id')
+                  ->references('id')
+                  ->on('departments')
+                  ->onDelete('cascade')
+                  ->nullable()
+                  ->constrained();
             $table->timestamps();
         });
     }
@@ -30,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('department__roles');
+        Schema::dropIfExists('department_roles');
     }
 };

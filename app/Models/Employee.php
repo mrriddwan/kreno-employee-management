@@ -4,8 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Department;
-use App\Models\Department_Roles;
 
 class Employee extends Model
 {
@@ -29,7 +27,7 @@ class Employee extends Model
 
     public function roles()
     {
-        return $this->belongsTo(Department_Roles::class, 'department_role_id');
+        return $this->belongsToMany(DepartmentRole::class, 'employee_roles');
     }
 
 }
