@@ -108,58 +108,7 @@
                             class="block text-sm font-medium text-gray-700"
                             >Roles
                         </label>
-                        <!-- <vue-select
-                            v-model="form.department_role_id"
-                            @change="getRoles"
-                            multiple
-                        >
-                            <option disabled value="">Please select one</option>
-                            <option
-                                v-for="role in roles"
-                                :key="role.id"
-                                :value="role.id"
-                            >
-                                {{ role.name }}
-                            </option>
-                        </vue-select> -->
-                        <!-- <multiselect
-                            v-model="form.department_role_id"
-                            :options="roles"
-                            placeholder="Select one/multiple"
-                            :multiple="true"
-                            :close-on-select="false"
-                            :clear-on-select="false"
-                        >
-                        </multiselect> -->
-                        <!-- <div>
-                            <multiselect
-                                v-model="form.department_role_id"
-                                :value="form.department_role_id"
-                                :options="roles"
-                                :multiple="true"
-                                :close-on-select="false"
-                                :clear-on-select="false"
-                                :preserve-search="true"
-                                placeholder="Select one/multiple"
-                                label="name"
-                                track-by="name"
-                                :preselect-first="true"
-                            >
-                                <template
-                                    slot="selection"
-                                    slot-scope="{ values, search, isOpen }"
-                                >
-                                    <span
-                                        class="multiselect__single m-10"
-                                        v-if="values.length &amp;&amp; !isOpen"
-                                        >{{ values.length }} options selected
-                                    </span>
-                                </template>
-                            </multiselect>
-                            <pre
-                                class="language-json m-10"
-                            ><code>{{ value }}</code></pre>
-                        </div> -->
+
                         <select v-model="form.department_role_id" multiple @change="debug(this.value)">
                             <option
                                 v-for="role in roles"
@@ -204,7 +153,7 @@ export default {
                 address: "",
                 email: "",
                 department_id: "",
-                department_role_id: [],
+                department_role_id: "",
                 employee_photo: "",
             },
             selected: "",
@@ -235,6 +184,7 @@ export default {
         updateEmployee() {
             axios
                 .put("/api/employees/update/" + this.$route.params.id, {
+                    id: this.form.id,
                     name: this.form.name,
                     address: this.form.address,
                     email: this.form.email,

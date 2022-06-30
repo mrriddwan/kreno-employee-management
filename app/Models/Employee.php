@@ -30,4 +30,5 @@ class Employee extends Model
         return $this->belongsToMany(DepartmentRole::class, 'employee_roles');
     }
 
+
 }

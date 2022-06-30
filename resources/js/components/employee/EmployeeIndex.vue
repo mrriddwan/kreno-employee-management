@@ -1,7 +1,9 @@
 <template>
     <div class="flex flex-row">
         <div class="basis-1/2">
-            <div class="text-center border-black rounded-md font-bold text-xl text-black uppercase">
+            <div
+                class="text-center border-black rounded-md font-bold text-xl text-black uppercase"
+            >
                 <h2 class="text-center">Employee List</h2>
             </div>
 
@@ -42,7 +44,6 @@
                 </thead>
 
                 <tbody>
-
                     <tr v-for="employee in employees" :key="employee.id">
                         <td
                             class="px-3 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap"
@@ -55,30 +56,34 @@
                             {{ employee.name }}
                         </td>
 
-                        <td v-if="employee.department_id === null"
+                        <td
+                            v-if="employee.department_id === null"
                             class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap"
                         >
-                        No department
+                            No department
                         </td>
-                        <td v-else
+                        <td
+                            v-else
                             class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap"
                         >
-                        {{ employee.department.name }}
+                            {{ employee.department.name }}
                         </td>
 
-                        <td v-if="employee.department_role_id === null"
+                        <td
+                            v-if="employee.roles.length === 0"
                             class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap"
                         >
-                        No roles
+                            No role(s)
                         </td>
-                        <td v-else
+                        <td
+                            v-else
                             class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap"
                         >
-                        {{ employee.roles.name }}
-                        </td>
-                        
 
-                    
+                            <span v-for="role in employee.roles" :key="role.id">
+                                {{role.name}}
+                            </span>
+                        </td>
 
                         <td>
                             <div class="btn-group" role="group">
@@ -115,20 +120,19 @@
 </template>
 
 <script>
-import DepartmentList from '../department/DepartmentList.vue';
-import RoleIndex from '../department/role/RoleIndex.vue';
+import DepartmentList from "../department/DepartmentList.vue";
+import RoleIndex from "../department/role/RoleIndex.vue";
 
 export default {
     components: {
         DepartmentList,
-        RoleIndex
+        RoleIndex,
     },
 
     data() {
         return {
             employees: [],
             departments: [],
-
         };
     },
 

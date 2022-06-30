@@ -25155,7 +25155,7 @@ __webpack_require__.r(__webpack_exports__);
         address: "",
         email: "",
         department_id: "",
-        department_role_id: [],
+        department_role_id: "",
         employee_photo: ""
       },
       selected: "",
@@ -25185,6 +25185,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios.put("/api/employees/update/" + this.$route.params.id, {
+        id: this.form.id,
         name: this.form.name,
         address: this.form.address,
         email: this.form.email,
@@ -26302,7 +26303,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* KEYED_FRAGMENT */
   ))], 544
   /* HYDRATE_EVENTS, NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.department_id]]), _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <vue-select\r\n                            v-model=\"form.department_role_id\"\r\n                            @change=\"getRoles\"\r\n                            multiple\r\n                        >\r\n                            <option disabled value=\"\">Please select one</option>\r\n                            <option\r\n                                v-for=\"role in roles\"\r\n                                :key=\"role.id\"\r\n                                :value=\"role.id\"\r\n                            >\r\n                                {{ role.name }}\r\n                            </option>\r\n                        </vue-select> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <multiselect\r\n                            v-model=\"form.department_role_id\"\r\n                            :options=\"roles\"\r\n                            placeholder=\"Select one/multiple\"\r\n                            :multiple=\"true\"\r\n                            :close-on-select=\"false\"\r\n                            :clear-on-select=\"false\"\r\n                        >\r\n                        </multiselect> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div>\r\n                            <multiselect\r\n                                v-model=\"form.department_role_id\"\r\n                                :value=\"form.department_role_id\"\r\n                                :options=\"roles\"\r\n                                :multiple=\"true\"\r\n                                :close-on-select=\"false\"\r\n                                :clear-on-select=\"false\"\r\n                                :preserve-search=\"true\"\r\n                                placeholder=\"Select one/multiple\"\r\n                                label=\"name\"\r\n                                track-by=\"name\"\r\n                                :preselect-first=\"true\"\r\n                            >\r\n                                <template\r\n                                    slot=\"selection\"\r\n                                    slot-scope=\"{ values, search, isOpen }\"\r\n                                >\r\n                                    <span\r\n                                        class=\"multiselect__single m-10\"\r\n                                        v-if=\"values.length &amp;&amp; !isOpen\"\r\n                                        >{{ values.length }} options selected\r\n                                    </span>\r\n                                </template>\r\n                            </multiselect>\r\n                            <pre\r\n                                class=\"language-json m-10\"\r\n                            ><code>{{ value }}</code></pre>\r\n                        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.department_id]]), _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
       return $data.form.department_role_id = $event;
     }),
@@ -26443,9 +26444,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* TEXT */
     ), employee.department_id === null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_9, " No department ")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(employee.department.name), 1
     /* TEXT */
-    )), employee.department_role_id === null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_11, " No roles ")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(employee.roles.name), 1
-    /* TEXT */
-    )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    )), employee.roles.length === 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_11, " No role(s) ")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_12, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(employee.roles, function (role) {
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
+        key: role.id
+      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(role.name), 1
+      /* TEXT */
+      );
+    }), 128
+    /* KEYED_FRAGMENT */
+    ))])), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
       to: {
         name: 'edit',
         params: {

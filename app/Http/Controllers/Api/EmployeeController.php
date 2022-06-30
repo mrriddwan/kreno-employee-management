@@ -10,6 +10,8 @@ use App\Models\Department;
 use App\Models\Department_Roles;
 use Illuminate\Http\Request;
 use App\Http\Resources\EmployeeResource;
+use App\Models\EmployeeRole;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -50,15 +52,19 @@ class EmployeeController extends Controller
         ]);
     }
 
-    public function update(Request $request, Employee $employee)
-    {
+    public function update(Request $request, Employee $employee, EmployeeRole $employeeRole)
+    {   
+
+        //TRIAL 3
+
+        $employee->roles()->sync($request['department_role_id']);
+
 
         $employee->update([
             'name' => $request->name,
             'address' => $request->address,
             'email' => $request->email,
             'department_id' => $request->department_id,
-            'department_role_id' => $request->department_role_id,
         ]);
 
 
@@ -69,19 +75,23 @@ class EmployeeController extends Controller
         ]);
     }
 
-    public function assignDept(Request $request, Employee $employee)
-    {
-        $employee->update([
-            'department_id' => $request->department_id,
-            'department_role_id' => $request->department_role_id,
-        ]);
+    // public function assignDept(Request $request, Employee $employee)
+    // {
+    //     $employee->update([
+    //         'department_id' => $request->department_id,
+    //     ]);
 
-        return response()->json([
-            'status' => true,
-            'message' => 'Successfully fetch data employee ' . $employee->name,
-            'data' => $employee,
-        ]);
-    }
+    //     return response()->json([
+    //         'status' => true,
+    //         'message' => 'Successfully fetch data employee ' . $employee->name,
+    //         'data' => $employee,
+    //     ]);
+    // }
+
+    // public function assignRole(Request $request, EmployeeRole $employeeRole)
+    // {
+
+    // }
 
     public function delete(Employee $employee)
     {
