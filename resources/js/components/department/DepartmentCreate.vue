@@ -1,6 +1,8 @@
 <template>
     <div>
         <h3 class="text-center">Create Department</h3>
+
+        <GoBack />
         <div class="row">
             <div class="col-md-6">
                 <form @submit.prevent="createDepartment">
@@ -32,12 +34,13 @@
 </template>
 
 <script>
+import GoBack from '../utils/GoBack.vue';
 export default {
     data() {
         return {
             form: {
-                name: '',
-                description: '',
+                name: "",
+                description: "",
             },
         };
     },
@@ -45,13 +48,14 @@ export default {
         createDepartment() {
             axios
                 .post("/api/departments/store", {
-                    name: this.form.name,
-                    description: this.form.description,
-                })
+                name: this.form.name,
+                description: this.form.description,
+            })
                 .then((res) => {
-                    this.$router.push({ name: "index" });
-                });
+                this.$router.push({ name: "index" });
+            });
         },
     },
+    components: { GoBack }
 };
 </script>

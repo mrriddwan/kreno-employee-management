@@ -1,5 +1,6 @@
 <template>
     <h3 class="text-center">Edit Employee</h3>
+    <GoBack />
     <form @submit.prevent="profileUpload" enctype="multipart/form-data">
         <div class="custom-file">
             <input
@@ -24,45 +25,42 @@
 </template>
 
 <script>
+import GoBack from '../utils/GoBack.vue';
 export default {
     data() {
         return {
-            photo: '',
+            photo: "",
             photoPreview: null,
         };
     },
-
     methods: {
         imageSelected(e) {
             this.photo = e.target.files[0];
-
             let reader = new FileReader();
             reader.readAsDataURL(this.photo);
             reader.onload = (e) => {
                 this.photoPreview = e.target.result;
             };
         },
-
         profileUpload() {
-                const config = {
-                    headers: {
-                        'content-type': 'multipart/form-data'
-                    }
+            const config = {
+                headers: {
+                    "content-type": "multipart/form-data"
                 }
-                let data = new FormData();
-                data.append('employee_photo', this.photo);
-                axios
-                    .post('/api/employees/upload-photo/' + this.$route.params.id, data, config)
-                    .then((res) => {
-                        this.success = res.data.success;
-                        this.$router.push({  name: 'edit' });
-                    })
-                    .catch((err) => {
-                        this.output = err;
-                        
-                    });
-
+            };
+            let data = new FormData();
+            data.append("employee_photo", this.photo);
+            axios
+                .post("/api/employees/upload-photo/" + this.$route.params.id, data, config)
+                .then((res) => {
+                this.success = res.data.success;
+                this.$router.push({ name: "edit" });
+            })
+                .catch((err) => {
+                this.output = err;
+            });
         },
     },
+    components: { GoBack }
 };
 </script>

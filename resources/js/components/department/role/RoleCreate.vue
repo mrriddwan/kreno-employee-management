@@ -1,6 +1,9 @@
 <template>
     <div>
         <h3 class="text-center">Create Roles</h3>
+
+        <GoBack />
+
         <div class="row">
             <div class="col-md-6">
                 <form @submit.prevent="createRole">

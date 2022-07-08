@@ -2,19 +2,15 @@
     <div>
         <h3 class="text-center">Edit Employee</h3>
         <div class="row">
-            <div class="col-md-6">
-                <router-link
-                    :to="{ name: 'EmployeeUploadImage' }"
-                    class="inline-flex items-center px-2 py-2 mt-4 mb-4 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150"
-                    >Edit</router-link
-                >
+            <GoBack />
 
+            <div class="col-md-6">
                 <form
                     class="space-y-6"
                     v-on:submit.prevent="updateEmployee"
                     enctype="multipart/form-data"
                 >
-                    <div class="space-y-4 rounded-md shadow-sm">
+                    <div class="flex justify-center">
                         <img
                             v-if="form.employee_photo"
                             class="w-20 h-20 rounded-full shadow-lg"
@@ -31,6 +27,14 @@
                             alt="Bonnie image"
                         />
 
+                        <router-link
+                            :to="{ name: 'EmployeeUploadImage' }"
+                            class="inline-flex items-center px-1 py-1 ml-4 mb-4 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150"
+                            >Edit</router-link
+                        >
+                    </div>
+
+                    <div class="space-y-4 rounded-md shadow-sm">
                         <div>
                             <label
                                 for="name"
@@ -109,11 +113,15 @@
                             >Roles
                         </label>
 
-                        <select v-model="form.department_role_id" multiple @change="debug(this.value)">
+                        <select
+                            v-model="form.department_role_id"
+                            multiple
+                            @change="debug(this.value)"
+                        >
                             <option
                                 v-for="role in roles"
                                 :value="role.id"
-                                :key="role.id"                                
+                                :key="role.id"
                             >
                                 {{ role.name }}
                             </option>
@@ -136,10 +144,12 @@
 
 <script>
 import Multiselect from "vue-multiselect";
+import GoBack from "../utils/GoBack.vue";
 
 export default {
     components: {
         Multiselect,
+        GoBack,
     },
 
     computed: {
@@ -167,10 +177,10 @@ export default {
         this.getRoles();
     },
     methods: {
-        debug(value){
-            console.log(value)
+        debug(value) {
+            console.log(value);
         },
-        
+
         showEmployee() {
             axios
                 .get("/api/employees/show/" + this.$route.params.id)

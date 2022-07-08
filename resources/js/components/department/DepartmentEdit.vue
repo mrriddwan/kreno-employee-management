@@ -1,6 +1,7 @@
 <template>
     <div>
         <h3 class="text-center">Edit Department</h3>
+        <GoBack />
         <div class="row">
             <div class="col-md-6">
                 <router-link
@@ -80,6 +81,7 @@
 </template>
 
 <script>
+import GoBack from '../utils/GoBack.vue';
 export default {
     data() {
         return {
@@ -98,23 +100,23 @@ export default {
             axios
                 .get("/api/departments/show/" + this.$route.params.id)
                 .then((res) => {
-                    this.form = res.data.data;
-                })
+                this.form = res.data.data;
+            })
                 .catch((error) => {
-                    console.log(error);
-                });
+                console.log(error);
+            });
         },
         updateDepartment() {
             axios
                 .put("/api/departments/update/" + this.$route.params.id, {
-                    name: this.form.name,
-                    description: this.form.description,
-                })
+                name: this.form.name,
+                description: this.form.description,
+            })
                 .then((res) => {
-                    this.$router.push({ name: "index" });
-                });
+                this.$router.push({ name: "index" });
+            });
         },
-
     },
+    components: { GoBack }
 };
 </script>
