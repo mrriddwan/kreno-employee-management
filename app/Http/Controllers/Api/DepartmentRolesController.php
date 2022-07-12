@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\DepartmentRole;
+use App\Http\Resources\DepartmentResource;
 
 class DepartmentRolesController extends Controller
 {
@@ -48,5 +49,12 @@ class DepartmentRolesController extends Controller
         ]);
     }
 
-    
+    public function selectRole() 
+    {   
+        $department_id = request('department_id');
+
+        $roles = DepartmentRole::where('department_id', $department_id)->get();
+
+        return DepartmentResource::collection($roles);
+    }
 }

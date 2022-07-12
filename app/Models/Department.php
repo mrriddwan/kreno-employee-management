@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Department extends Model
 {
     use HasFactory;
@@ -24,6 +25,6 @@ class Department extends Model
 
     public function roles()
     {
-        return $this->hasMany(Department_Roles::class);
+        return $this->hasMany(DepartmentRole::class);
     }
 }

@@ -36,9 +36,9 @@ Route::get('/departments/show/{department}', [DepartmentController::class, 'show
 Route::delete('/departments/delete/{department}', [DepartmentController::class, 'delete'])->name('department:delete');
 Route::post('/departments/upload-photo/{department}', [DepartmentController::class, 'uploadPhoto'])->name('department:uploadPhoto');
 
+
 Route::get('/roles/index', [DepartmentRolesController::class, 'index']);
-Route::get('/roles/list', [DepartmentRolesController::class, 'list']);
 Route::post('/roles/store', [DepartmentRolesController::class, 'store']);
 Route::get('/roles/show/{role}', [DepartmentRolesController::class, 'show'])->name('role:show');
 Route::delete('/roles/delete/{role}', [DepartmentRolesController::class, 'delete']);
-
+Route::get('/roles/selectRole', [DepartmentRolesController::class, 'selectRole']);

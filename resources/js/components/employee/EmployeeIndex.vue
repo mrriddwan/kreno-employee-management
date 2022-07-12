@@ -44,7 +44,8 @@
                 </thead>
 
                 <tbody>
-                    <tr v-for="employee in employees" :key="employee.id">
+                    <tr v-for="employee in employees" :key="employee.id" class="align-content-center;
+">
                         <td
                             class="px-3 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap"
                         >
@@ -60,27 +61,34 @@
                             v-if="employee.department_id === null"
                             class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap"
                         >
-                            No department
+                            <span id="no-department-bubble">
+                                No department
+                            </span>
                         </td>
                         <td
                             v-else
                             class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap"
                         >
-                            {{ employee.department.name }}
+                            <span id="department-bubble">
+                                {{ employee.department.name }}
+                            </span>
+
                         </td>
 
                         <td
                             v-if="employee.roles.length === 0"
                             class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap"
                         >
-                            No role(s)
+                            <span id="no-role-bubble">
+                                No role(s)
+                            </span>
                         </td>
                         <td
                             v-else
                             class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap"
                         >
 
-                            <span v-for="role in employee.roles" :key="role.id">
+                            <span v-for="role in employee.roles" :key="role.id" id="role-bubble">
                                 {{role.name}}
                             </span>
                         </td>
@@ -163,3 +171,40 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+#role-bubble {
+    border-radius: 6px;
+    background-color: rgb(45 212 191);
+    border-color: rgb(45 212 191);
+    border-width: 6px;
+    margin: 3px;
+
+}
+
+#no-role-bubble {
+    border-radius: 6px;
+    background-color: rgb(253 230 138);
+    border-color: rgb(253 230 138);
+    border-width: 6px;
+    margin: 3px;
+    
+}
+
+#department-bubble {
+    border-radius: 6px;
+    background-color: rgb(103 232 249);
+    border-color: rgb(103 232 249);
+    border-width: 6px;
+    margin: 3px;
+}
+
+#no-department-bubble {
+    border-radius: 6px;
+    background-color: rgb(253 230 138);
+    border-color: rgb(253 230 138);
+    border-width: 6px;
+    margin: 3px;
+    
+}
+</style>

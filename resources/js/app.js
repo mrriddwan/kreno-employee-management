@@ -14,7 +14,7 @@ createApp({
     components: {
         EmployeeIndex,
         DepartmentList,
-        RoleIndex
+        RoleIndex,
     }
 }).use(routes).mount('#app')
 

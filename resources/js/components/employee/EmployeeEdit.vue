@@ -88,6 +88,24 @@
                             </div>
                         </div>
 
+                        <div>
+                            <label
+                                for="roles"
+                                class="block text-sm font-medium text-gray-700"
+                                >Current Department
+                            </label>
+
+                            <p>Employee current department: {{ this.form.department }} </p>
+
+                            <label
+                                for="roles"
+                                class="block text-sm font-medium text-gray-700"
+                                >Current Roles
+                            </label>
+
+                            <p>Employee current role(s):  {{ this.form.roles }} </p>
+                        </div>
+
                         <label
                             for="department"
                             class="block text-sm font-medium text-gray-700"
@@ -97,7 +115,8 @@
                             v-model="form.department_id"
                             @change="getDepartments"
                         >
-                            <option disabled value="">Please select one</option>
+                            <option value="">Please select one</option>
+
                             <option
                                 v-for="department in departments"
                                 :key="department.id"
@@ -113,21 +132,30 @@
                             >Roles
                         </label>
 
-                        <select
-                            v-model="form.department_role_id"
-                            multiple
-                            @change="debug(this.value)"
-                        >
+                        <select v-model="form.department_role_id" multiple>
                             <option
                                 v-for="role in roles"
-                                :value="role.id"
                                 :key="role.id"
+                                :value="role.id"
                             >
                                 {{ role.name }}
                             </option>
                         </select>
 
-                        <div>Selected: {{ form.department_role_id }}</div>
+                        <!-- <div>
+                            <Select2
+                                v-model="myValue"
+                                :options="myOptions"
+                                :settings="{
+                                    settingOption: value,
+                                    settingOption: value,
+                                }"
+                                @change="myChangeEvent($event)"
+                                @select="mySelectEvent($event)"
+                                style="width: 100%"
+                            />
+                            <h4>Value: {{ myValue }}</h4>
+                        </div> -->
                     </div>
 
                     <button
@@ -143,17 +171,14 @@
 </template>
 
 <script>
-import Multiselect from "vue-multiselect";
 import GoBack from "../utils/GoBack.vue";
+import Select2 from "vue3-select2-component";
+import axios from "axios";
 
 export default {
     components: {
-        Multiselect,
         GoBack,
-    },
-
-    computed: {
-        options: () => roles,
+        Select2,
     },
 
     data() {
@@ -166,21 +191,30 @@ export default {
                 department_role_id: "",
                 employee_photo: "",
             },
-            selected: "",
             departments: [],
             roles: [],
         };
     },
+
+    watch: {
+        "form.department_id": function (value) {
+            axios
+                .get(
+                    "/api/roles/selectRole?department_id=" +
+                        this.form.department_id
+                )
+                .then((response) => {
+                    // console.log(response.data)
+                    this.roles = response.data.data;
+                });
+        },
+    },
+
     created() {
         this.showEmployee();
         this.getDepartments();
-        this.getRoles();
     },
     methods: {
-        debug(value) {
-            console.log(value);
-        },
-
         showEmployee() {
             axios
                 .get("/api/employees/show/" + this.$route.params.id)
@@ -212,17 +246,6 @@ export default {
                 .get("/api/departments/index")
                 .then((res) => {
                     this.departments = res.data.data;
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        },
-
-        getRoles() {
-            axios
-                .get("/api/roles/index")
-                .then((res) => {
-                    this.roles = res.data.data;
                 })
                 .catch((error) => {
                     console.log(error);

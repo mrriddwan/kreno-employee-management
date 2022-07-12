@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\Department;
 use App\Http\Resources\DepartmentResource;
 use App\Http\Requests\DepartmentRequest;
+use App\Models\DepartmentRole;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+
 
 class DepartmentController extends Controller
 {
@@ -70,4 +72,5 @@ class DepartmentController extends Controller
             'message' => 'Department deleted'
         ]);
     }
+
 }
