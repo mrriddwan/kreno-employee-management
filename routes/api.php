@@ -22,10 +22,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/employees/index', [EmployeeController::class, 'index'])->name('employee:index');
+Route::get('/employees/list', [EmployeeController::class, 'list'])->name('employee:list');
 Route::post('/employees/store', [EmployeeController::class, 'store'])->name('employee:store');
 Route::get('/employees/show/{employee}', [EmployeeController::class, 'show'])->name('employee:show');
 Route::put('/employees/update/{employee}', [EmployeeController::class, 'update'])->name('employee:update');
-Route::post('/api/employees/assignDept/{employee}', [EmployeeController::class, 'assignDept'])->name('employee:assignDept');
 Route::delete('/employees/delete/{employee}', [EmployeeController::class, 'delete'])->name('employee:delete');
 Route::post('/employees/upload-photo/{employee}', [EmployeeController::class, 'uploadPhoto'])->name('employee:uploadPhoto');
 

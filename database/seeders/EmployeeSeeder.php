@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\Employee;
 
 class EmployeeSeeder extends Seeder
 {
@@ -15,23 +16,25 @@ class EmployeeSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('employees')->insert([
-            [
-                'id' => 1,
-                'name' => 'Alex'
-            ],
-            [
-                'id' => 2,
-                'name' => 'Ryan'
-            ],
-            [
-                'id' => 3,
-                'name' => 'Fareed'
-            ],
-            [
-                'id' => 4,
-                'name' => 'Lee'
-            ],
-        ]);
+        // DB::table('employees')->insert([
+        //     [
+        //         'id' => 1,
+        //         'name' => 'Alex'
+        //     ],
+        //     [
+        //         'id' => 2,
+        //         'name' => 'Ryan'
+        //     ],
+        //     [
+        //         'id' => 3,
+        //         'name' => 'Fareed'
+        //     ],
+        //     [
+        //         'id' => 4,
+        //         'name' => 'Lee'
+        //     ],
+        // ]);
+
+        Employee::factory()->count(100)->create();
     }
 }

@@ -22,8 +22,13 @@ class EmployeeController extends Controller
     {
         $employees = Employee::with('department', 'roles')->get();
 
-
         return response()->json(['data' => $employees]);
+    }
+
+    public function list()
+    {
+        $employee = Employee::with('department', 'roles')->paginate(10);
+        return response()->json($employee);
     }
 
 
@@ -43,19 +48,23 @@ class EmployeeController extends Controller
     }
 
     public function show(Employee $employee)
-    {
+    {   
+
+        $data = Employee::with('department', 'roles')
+                ->where('id', $employee->id)
+                ->get();
+
 
         return response()->json([
             'status' => true,
-            'message' => 'Successfully fetch data employee ' . $employee->name,
-            'data' => $employee,
+            'message' => 'Successfully fetch data employee ',
+            'data' => $data,
         ]);
     }
 
-    public function update(Request $request, Employee $employee, EmployeeRole $employeeRole)
+    public function update(Request $request, Employee $employee)
     {   
 
-        //TRIAL 3
 
         $employee->roles()->sync($request['department_role_id']);
 
@@ -74,24 +83,6 @@ class EmployeeController extends Controller
             'data' => $employee,
         ]);
     }
-
-    // public function assignDept(Request $request, Employee $employee)
-    // {
-    //     $employee->update([
-    //         'department_id' => $request->department_id,
-    //     ]);
-
-    //     return response()->json([
-    //         'status' => true,
-    //         'message' => 'Successfully fetch data employee ' . $employee->name,
-    //         'data' => $employee,
-    //     ]);
-    // }
-
-    // public function assignRole(Request $request, EmployeeRole $employeeRole)
-    // {
-
-    // }
 
     public function delete(Employee $employee)
     {

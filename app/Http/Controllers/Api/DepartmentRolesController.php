@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\DepartmentRole;
 use App\Http\Resources\DepartmentResource;
+use App\Http\Resources\DepartmentRolesResource;
 
 class DepartmentRolesController extends Controller
 {
@@ -55,6 +56,12 @@ class DepartmentRolesController extends Controller
 
         $roles = DepartmentRole::where('department_id', $department_id)->get();
 
-        return DepartmentResource::collection($roles);
+        // $roles = collect(['id','name'])->toArray();
+
+        // return $roles->toArray();
+
+        return DepartmentRolesResource::collection($roles);
+
+
     }
 }

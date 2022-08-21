@@ -95,7 +95,9 @@
                                 >Current Department
                             </label>
 
-                            <p>Employee current department: {{ this.form.department }} </p>
+                            <p>
+                                {{ form.department_id }}
+                            </p>
 
                             <label
                                 for="roles"
@@ -103,7 +105,9 @@
                                 >Current Roles
                             </label>
 
-                            <p>Employee current role(s):  {{ this.form.roles }} </p>
+                            <p>
+                                {{ form.roles }}
+                            </p>
                         </div>
 
                         <label
@@ -132,6 +136,7 @@
                             >Roles
                         </label>
 
+
                         <select v-model="form.department_role_id" multiple>
                             <option
                                 v-for="role in roles"
@@ -142,20 +147,7 @@
                             </option>
                         </select>
 
-                        <!-- <div>
-                            <Select2
-                                v-model="myValue"
-                                :options="myOptions"
-                                :settings="{
-                                    settingOption: value,
-                                    settingOption: value,
-                                }"
-                                @change="myChangeEvent($event)"
-                                @select="mySelectEvent($event)"
-                                style="width: 100%"
-                            />
-                            <h4>Value: {{ myValue }}</h4>
-                        </div> -->
+
                     </div>
 
                     <button
@@ -172,13 +164,16 @@
 
 <script>
 import GoBack from "../utils/GoBack.vue";
-import Select2 from "vue3-select2-component";
 import axios from "axios";
+
+
+
 
 export default {
     components: {
         GoBack,
-        Select2,
+
+
     },
 
     data() {
@@ -193,6 +188,14 @@ export default {
             },
             departments: [],
             roles: [],
+
+            // valueChange: [],
+            // value: [{ label: "Javascript", id: "1" }],
+            // options: [
+            //     { label: "Vue.js", id: "2" },
+            //     { label: "C#", id: "3" },
+            //     { label: "React.js", id: "4" },
+            // ],
         };
     },
 
@@ -215,6 +218,7 @@ export default {
         this.getDepartments();
     },
     methods: {
+
         showEmployee() {
             axios
                 .get("/api/employees/show/" + this.$route.params.id)
@@ -254,3 +258,10 @@ export default {
     },
 };
 </script>
+
+<style>
+
+
+
+
+</style>

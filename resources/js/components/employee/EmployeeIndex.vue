@@ -44,8 +44,11 @@
                 </thead>
 
                 <tbody>
-                    <tr v-for="employee in employees" :key="employee.id" class="align-content-center;
-">
+                    <tr
+                        v-for="employee in employees.data"
+                        :key="employee.id"
+                        class="align-content-center;"
+                    >
                         <td
                             class="px-3 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap"
                         >
@@ -72,24 +75,24 @@
                             <span id="department-bubble">
                                 {{ employee.department.name }}
                             </span>
-
                         </td>
 
                         <td
                             v-if="employee.roles.length === 0"
                             class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap"
                         >
-                            <span id="no-role-bubble">
-                                No role(s)
-                            </span>
+                            <span id="no-role-bubble"> No role(s) </span>
                         </td>
                         <td
                             v-else
                             class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap"
                         >
-
-                            <span v-for="role in employee.roles" :key="role.id" id="role-bubble">
-                                {{role.name}}
+                            <span
+                                v-for="role in employee.roles"
+                                :key="role.id"
+                                id="role-bubble"
+                            >
+                                {{ role.name }}
                             </span>
                         </td>
 
@@ -114,27 +117,43 @@
                     </tr>
                 </tbody>
             </table>
+            <Pagination
+                :data="employees"
+                @pagination-change-page="getEmployees"
+                :limit="3"
+                :size="'small'"
+                :align="'center'"
+                class="pagination"
+            >
+                <template #prev-nav>
+                    <span>Previous</span>
+                </template>
+                <template #next-nav>
+                    <span>Next</span>
+                </template>
+            </Pagination>
         </div>
 
         <div class="basis-1/2">
             <DepartmentList />
             <RoleIndex />
         </div>
-
-        <!-- <div class="basis-1/2">
-            <RoleIndex />
-        </div> -->
     </div>
 </template>
 
 <script>
 import DepartmentList from "../department/DepartmentList.vue";
 import RoleIndex from "../department/role/RoleIndex.vue";
+import LaravelVuePagination from "laravel-vue-pagination";
+// import '../node_modules/bootstrap/dist/css/bootstrap.css';
+import Multiselect from 'vue-multiselect'
 
 export default {
     components: {
         DepartmentList,
         RoleIndex,
+        Pagination: LaravelVuePagination,
+        Multiselect
     },
 
     data() {
@@ -149,11 +168,15 @@ export default {
     },
 
     methods: {
-        getEmployees() {
+        getEmployees(page = 1) {
+            if (typeof page === "undefined") {
+                page = 1;
+            }
+
             axios
-                .get("/api/employees/index")
+                .get("/api/employees/list?page=" + page)
                 .then((res) => {
-                    this.employees = res.data.data;
+                    this.employees = res.data;
                     console.log(res.data.data);
                 })
                 .catch((error) => {
@@ -179,7 +202,6 @@ export default {
     border-color: rgb(45 212 191);
     border-width: 6px;
     margin: 3px;
-
 }
 
 #no-role-bubble {
@@ -188,7 +210,6 @@ export default {
     border-color: rgb(253 230 138);
     border-width: 6px;
     margin: 3px;
-    
 }
 
 #department-bubble {
@@ -205,6 +226,6 @@ export default {
     border-color: rgb(253 230 138);
     border-width: 6px;
     margin: 3px;
-    
 }
+
 </style>
